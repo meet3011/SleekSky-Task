@@ -1,24 +1,54 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import guard from "./guard.jpg"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+const App = () =>{
+
+let time= new Date().toLocaleTimeString();
+
+const [ctime, setCtime]=useState(time);
+const [clog, setClog]= useState([]);
+const [count, setCount]= useState(0);
+
+const UpdateTime = () =>{
+  time= new Date().toLocaleTimeString();
+  setCtime(time);
+};
+
+const UpdateLog = () =>{
+    setClog([...clog,ctime]);
+    setCount(count+1);
+};
+
+setInterval(UpdateTime , 1000);
+
+  return(
+    <>
+
+      <img src={guard} className='logo' alt='logo'/>
+
+      <div className='header'>
+        <h1>Current Time is : {ctime}</h1>
+      </div>
+
+      <div className='sidebar'>
+        <button onClick={UpdateLog}>Click Here</button>
+      </div>
+
+      <div className='content'>
+        {
+          clog.map(log => 
+            <li key={log.toString()}>
+              You clicked at {log}
+            </li>)
+        }
+      </div>
+      
+      <div className='footer'>
+        <h1>You have clicked {count} times</h1>
+      </div>
+
+    </>
   );
 }
 
